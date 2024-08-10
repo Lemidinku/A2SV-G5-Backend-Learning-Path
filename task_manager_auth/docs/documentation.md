@@ -4,6 +4,22 @@
 
 The Task Management API allows you to manage tasks with basic CRUD (Create, Read, Update, Delete) operations. This API is built using Go and the Gin framework and uses MongoDB for persistent data storage.
 
+## Setting up environmental variables
+
+To set up the JWT secret key for authentication, follow these steps:
+
+1. Create a new file in the root directory of your project called `.env`.
+
+2. Open the `.env` file and add the following line:
+
+```
+JWT_SECRET="your_secret_key"
+```
+
+Replace `"your_secret_key"` with your desired secret key for JWT authentication.
+
+3. Save the `.env` file.
+
 ## Running the API
 
 To run the API, you need to have Go and MongoDB installed on your system. You can start the API by running the following command in the root directory of the project:
@@ -66,8 +82,7 @@ This API allows you to manage tasks. You can create, read, update, and delete ta
 }
 ```
 
-
-### log in 
+### log in
 
 **Endpoint:** `POST /login`
 
@@ -89,31 +104,29 @@ This API allows you to manage tasks. You can create, read, update, and delete ta
 
 ```json
 {
-    "message": "User logged in successfully",
-    "token": "exampleToken"
+  "message": "User logged in successfully",
+  "token": "exampleToken"
 }
 ```
 
 - **Status Code:** `404 Not Found`
-- **Description:**  `if the username is wrong`
+- **Description:** `if the username is wrong`
 - **Body:**
 
 ```json
 {
-    "message": "user not found"
+  "message": "user not found"
 }
-
 ```
 
 - **Status Code:** `404 Not Found`
-- **Description:**  `if the password is wrong`
+- **Description:** `if the password is wrong`
 - **Body:**
 
 ```json
 {
-    "message": "invalid password"
+  "message": "invalid password"
 }
-
 ```
 
 ### Promote a user to admin
@@ -122,7 +135,6 @@ This API allows you to manage tasks. You can create, read, update, and delete ta
 
 **Description:** Promote a user to admin.
 
-
 **Response:**
 
 - **Status Code:** `200 OK`
@@ -130,11 +142,9 @@ This API allows you to manage tasks. You can create, read, update, and delete ta
 
 ```json
 {
-    "message": "The user have been promoted"
+  "message": "The user have been promoted"
 }
 ```
-
-
 
 ### Get All Tasks
 
