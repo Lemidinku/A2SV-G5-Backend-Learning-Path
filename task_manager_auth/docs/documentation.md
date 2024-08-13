@@ -8,7 +8,7 @@ The Task Management API allows you to manage tasks with basic CRUD (Create, Read
 
 To set up the JWT secret key for authentication, follow these steps:
 
-1. Create a new file in the root directory of your project called `.env`.
+1. Create a new file in the `/delivery` directory of your project called `.env`.
 
 2. Open the `.env` file and add the following line:
 
@@ -25,6 +25,7 @@ Replace `"your_secret_key"` with your desired secret key for JWT authentication.
 To run the API, you need to have Go and MongoDB installed on your system. You can start the API by running the following command in the root directory of the project:
 
 ```bash
+cd delivery
 go run main.go
 ```
 
