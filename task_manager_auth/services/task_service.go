@@ -54,6 +54,10 @@ func (service *TaskService) GetTask(id string) (models.Task, error) {
 
 func (service *TaskService) AddTask(newTask models.Task) (models.Task, error) {
 	newTask.ID = uuid.NewString()
+	err := newTask.ValidateTask()
+	if err != nil {
+		return models.Task{}, err
+	}
 	result, err := service.collection.InsertOne(context.Background(), newTask)
 	if err != nil {
 		return models.Task{}, err

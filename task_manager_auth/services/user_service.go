@@ -29,7 +29,11 @@ func NewUserService() *UserService {
 
 // register a new user
 func (service *UserService) RegisterUser(newUser models.User) (models.User, error) {
-
+	err := newUser.ValidateUser()
+	if err != nil {
+		return models.User{}, err
+	}
+	
 	// check if user_name already exists
 	userNameCount ,err := service.collection.CountDocuments(context.Background(), bson.M{"username": newUser.Username})
 	if err != nil {
