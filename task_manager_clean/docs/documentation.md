@@ -4,6 +4,9 @@
 
 The Task Management API allows you to manage tasks with basic CRUD (Create, Read, Update, Delete) operations. This API is built using Go and the Gin framework and uses MongoDB for persistent data storage.
 
+### Postman documentation link
+[Task Manager API](https://documenter.getpostman.com/view/31604198/2sA3s6FAAc)
+
 ## Setting up environmental variables
 
 To set up the JWT secret key for authentication, follow these steps:
