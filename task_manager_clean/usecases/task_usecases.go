@@ -30,6 +30,11 @@ func (tu *TaskUsecase) GetTask(id string) (domain.Task, error) {
 
 // AddTask will add new task
 func (tu *TaskUsecase) AddTask(task domain.Task) (domain.Task, error) {
+	err := task.ValidateTask()
+	if err != nil {
+		return domain.Task{}, err
+	}
+
 	return tu.taskRepository.AddTask(task)
 }
 

@@ -18,6 +18,11 @@ func NewUserUsecase(ur domain.UserRepository) domain.UserUsecase {
 
 // GetTasks will get all tasks
 func (tu *UserUsecase) RegisterUser(user domain.User) (domain.User, error) {
+	// validate the user
+	err := user.ValidateUser()
+	if err != nil {
+		return domain.User{}, err
+	}
 	return tu.userRepository.RegisterUser(user)
 }	
 
