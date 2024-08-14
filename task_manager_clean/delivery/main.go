@@ -3,15 +3,13 @@ package main
 import (
 	"task_manager_clean/delivery/controllers"
 	"task_manager_clean/delivery/routers"
+	"task_manager_clean/infrastructure"
 	"task_manager_clean/repositories"
 	"task_manager_clean/usecases"
 
-	"context"
 	"log"
 
 	"github.com/joho/godotenv"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 
@@ -22,21 +20,22 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error loading .env file: %v", err)
 		}
-		clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-		client, err := mongo.Connect(context.Background(), clientOptions)
+
+		// Connect to the database
+		client, err := infrastructure.ConnectToMongoDB()
 		if err != nil {
 			log.Fatal(err)
 		}
-	
-		TaskCollection := client.Database("task_manager").Collection("tasks")
-		UserCollection := client.Database("task_manager").Collection("users")
+
+		// Create the collections
+		TaskCollection, _ := infrastructure.CreateCollection(client, "task_manager", "tasks")
+		UserCollection,_ := infrastructure.CreateCollection(client, "task_manager", "users")
 
 		// Initialize the repositories
 		taskRepository := repositories.NewTaskRepository(TaskCollection)
 		userRepository := repositories.NewUserRepository(UserCollection)
 
 		// Initialize the usecases
-		
 		var taskUsecase  = usecases.NewTaskUsecase(taskRepository)
 		userUsecase := usecases.NewUserUsecase(userRepository)
 
