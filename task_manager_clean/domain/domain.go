@@ -80,7 +80,7 @@ type TaskRepository interface {
 
 type UserRepository interface {
 	RegisterUser(user User) (User, error)
-	GetUser(user User) (string, error)
+	GetUser(user User) (User, error)
 	PromoteUser(username string) (string, error)
 }
 

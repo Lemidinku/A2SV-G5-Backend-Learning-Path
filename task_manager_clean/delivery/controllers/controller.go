@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"task_manager_clean/domain"
 
@@ -110,7 +109,6 @@ func (taskController *TaskController) Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Println("password", user.Password)
 
 	token, err := taskController.userUsecase.GetUser(user)
 	if err != nil {

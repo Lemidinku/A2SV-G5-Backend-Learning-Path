@@ -1,7 +1,9 @@
 package usecases
 
 import (
+	"errors"
 	"task_manager_clean/domain"
+	"task_manager_clean/infrastructure"
 )
 
 // TaskUsecase represent the task's usecases
@@ -23,12 +25,31 @@ func (tu *UserUsecase) RegisterUser(user domain.User) (domain.User, error) {
 	if err != nil {
 		return domain.User{}, err
 	}
+	hashedPassword, err := infrastructure.HashPassword(user.Password)
+	if err != nil {
+		return domain.User{}, err
+	}
+	user.Password = string(hashedPassword)
 	return tu.userRepository.RegisterUser(user)
 }	
 
 // GetTask will get a task by its ID
 func (tu *UserUsecase) GetUser(user domain.User) (string, error) {
-	return tu.userRepository.GetUser(user)
+	existingUser, err := tu.userRepository.GetUser(user)
+	if err != nil {
+		return "", err
+	}
+	err = infrastructure.IsPasswordCorrect(user.Password, existingUser.Password)
+	if err != nil {
+		return "", errors.New("invalid password")
+	}
+	jwtToken, err := infrastructure.GenerateToken(existingUser.ID, existingUser.Username, existingUser.Role)
+
+	if err != nil {
+		return "", errors.New("internal server error")
+	}
+
+	return jwtToken, nil
 }
 
 // AddTask will add new task
