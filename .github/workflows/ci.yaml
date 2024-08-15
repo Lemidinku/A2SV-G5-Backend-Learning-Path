@@ -26,7 +26,8 @@ jobs:
         run: go mod download
 
       - name: Run tests
-        run: go test -v $(go list ./... | grep -v 'Repositories')
+        run: go test -v
+        working-directory: ./task_manager/tests
 
       - name: Upload coverage
         uses: actions/upload-artifact@v2
