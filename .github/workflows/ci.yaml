@@ -25,11 +25,20 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
-      - name: Set up environment variables
-        run: echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+      - name: set up environmental variables
+        env:
+          JWT_SECRET: $ {{secrets.JWT_SECRET}}
 
-      - name: Run tests
-        run: go test $(go list ./... | grep -v 'repositories')
+      - name: Run infrastructure tests
+        run: go test ./infrastructure/... -V
+        working-directory: ./task_manager_test/test
+
+      - name: Run controllers tests
+        run: go test ./controllers/... -v
+        working-directory: ./task_manager_test/test
+
+      - name: Run usecase tests
+        run: go test ./usecases/... -v
         working-directory: ./task_manager_test/test
 
       - name: Upload coverage
