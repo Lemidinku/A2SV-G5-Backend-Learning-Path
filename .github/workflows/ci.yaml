@@ -28,15 +28,15 @@ jobs:
       - name: Run infrastructure tests
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run: go test ./infrastructure/... -V
+        run: go test ./infrastructure/...
         working-directory: ./task_manager_test/test
 
       - name: Run controllers tests
-        run: go test ./controllers/... -v
+        run: go test ./controllers/...
         working-directory: ./task_manager_test/test
 
       - name: Run usecase tests
-        run: go test ./usecases/... -v
+        run: go test ./usecases/...
         working-directory: ./task_manager_test/test
 
       - name: Upload coverage
