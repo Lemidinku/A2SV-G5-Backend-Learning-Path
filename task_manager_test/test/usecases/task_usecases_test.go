@@ -57,10 +57,10 @@ func (suite *TaskUsecaseTestSuite) TestGetTask_Success() {
 
 func (suite *TaskUsecaseTestSuite) TestGetTask_NoTaskFound() {
 	// Mock the task repository behavior
-	suite.mockTaskRepository.On("GetTask", "1").Return(domain.Task{}, errors.New("task not found"))
+	suite.mockTaskRepository.On("GetTask", "2").Return(domain.Task{}, errors.New("task not found"))
 
 	// Call the usecase function
-	_, err := suite.taskUsecase.GetTask("1")
+	_, err := suite.taskUsecase.GetTask("2")
 
 	// Assertions
 	suite.Error(err)
