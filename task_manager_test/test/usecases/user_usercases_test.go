@@ -138,15 +138,14 @@ func (suite *UserUsecaseTestSuite) TestGetUser_WrongPassword() {
 }
 
 func (suite *UserUsecaseTestSuite) TestGetUser_NotFound() {
-	mockUser := domain.User{Username: "test_user", Password: "password123"}
-	mockExistingUser := domain.User{Username: "test_user", Password: "password123"}
-	suite.userRepositoryMock.On("GetUser", mockUser).Return(mockExistingUser, nil)
+	mockUser := domain.User{Username: "no_user", Password: "password123"}
+	suite.userRepositoryMock.On("GetUser", mockUser).Return(domain.User{}, errors.New("user not found"))
 	// call the use case method
-	jwtToken, err := suite.userUsecase.GetUser(mockUser)
+	_, err := suite.userUsecase.GetUser(mockUser)
 
 	// Assertions
-	suite.NoError(err)
-	suite.NotNil(jwtToken)
+	suite.Error(err)
+	suite.Equal("user not found", err.Error())
 
 }
 
